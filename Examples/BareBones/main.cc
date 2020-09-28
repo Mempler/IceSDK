@@ -4,6 +4,7 @@
 #include "GameBase.h"
 #include "Graphics/EntityHelper.h"
 #include "Graphics/Fonts/FontFace.h"
+#include "Graphics/ImGui/Widgets/Properties.h"
 #include "Graphics/ImGui/Widgets/SceneGraph.h"
 
 using namespace IceSDK;
@@ -24,9 +25,12 @@ protected:
     {
         // ImGuiWidgets::AssetBrowser::Frame(this->GetAssetManager());
         ImGuiWidgets::SceneGraph::Frame(this->GetActiveScene());
+
+        _props.Frame();
     }
 
 private:
+    ImGuiWidgets::Properties _props;
 };
 
 Memory::Ptr<Game> g_Game;

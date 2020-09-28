@@ -54,6 +54,7 @@ unity_lib("IceSDK") {
         "Graphics/ImGui/bgfx_imgui.cc",
 #       "ImGui/Widgets/AssetBrowser.cc",
         "Graphics/ImGui/Widgets/SceneGraph.cc",
+        "Graphics/ImGui/Widgets/Properties.cc",
 
         #######################################################
         #                       Input                         #
