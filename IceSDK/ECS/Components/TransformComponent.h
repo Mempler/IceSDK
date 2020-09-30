@@ -9,6 +9,7 @@ namespace IceSDK::Components
     {
         glm::vec3 position;
         glm::vec3 scale;
+        float rotation;
 
         glm::mat4 model_matrix;
     };

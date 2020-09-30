@@ -1,0 +1,2 @@
+# Faster compilation for a lot of files
+enable_unity_build = true

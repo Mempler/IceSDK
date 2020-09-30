@@ -26,6 +26,9 @@ jobs:
 
       - name: Generate Build Files
         run: |
+          mkdir -p ./out
+          cp ./.ide/GN/linux/pc/args.gn ./out/args.gn
+          
           chmod +x ./tools/linux/gn
           ./tools/linux/gn gen out
 

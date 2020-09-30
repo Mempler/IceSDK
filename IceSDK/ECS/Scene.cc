@@ -17,6 +17,7 @@ Scene::Scene()
     CreateCamera();
 
     this->RegisterSystem<Systems::TransformSystem>();
+
     this->RegisterSystem<Systems::CameraSystem>();
 }
 

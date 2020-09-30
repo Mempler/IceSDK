@@ -8,7 +8,6 @@
 
 #include "GameBase.h"
 
-
 using namespace IceSDK;
 using namespace IceSDK::Systems;
 using namespace IceSDK::Components;

@@ -22,7 +22,7 @@ static void DeleteImageContainer(void* pPtr, void* pUserData)
 Memory::Ptr<Texture2D> Texture2D::Load(const std::string& pPath)
 {
     ICESDK_PROFILE_FUNCTION();
-    return Texture2D::Load(FileSystem::GetFileName(pPath),
+    return Texture2D::Load(std::string(FileSystem::GetFileName(pPath)),
                            FileSystem::ReadBinaryFile(pPath));
 }
 

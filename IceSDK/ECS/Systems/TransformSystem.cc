@@ -23,10 +23,12 @@ void TransformSystem::Tick(float pDelta)
         auto spriteEntity = Entity(this->_registry, rawTransformEntity);
         auto& transform = spriteEntity.GetComponent<TransformComponent>();
 
-        transform.model_matrix = glm::mat4(1);
-        transform.model_matrix =
-            glm::translate(transform.model_matrix, transform.position);
-        transform.model_matrix =
-            glm::scale(transform.model_matrix, transform.scale);
+        glm::mat4 matrix =
+            glm::translate(glm::mat4(1.0f), transform.position)
+            * glm::rotate(glm::mat4(1.0f), glm::radians(transform.rotation),
+                glm::vec3(0.f, 0.f, 1.f))
+            * glm::scale(glm::mat4(1.0f), transform.scale);
+
+        transform.model_matrix = matrix;
     }
 }
