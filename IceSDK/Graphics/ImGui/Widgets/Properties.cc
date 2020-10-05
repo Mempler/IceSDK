@@ -1,6 +1,7 @@
 #include "Graphics/ImGui/Widgets/Properties.h"
 
 #include "GameBase.h"
+#include "Graphics/ImGui/Widgets/Helpers/Components/Camera.h"
 #include "Graphics/ImGui/Widgets/Helpers/Components/Transform.h"
 #include "Graphics/ImGui/Widgets/Helpers/Vec.h"
 
@@ -24,6 +25,16 @@ void Properties::Frame()
     {
         Helpers::Components::DrawTransform(Components::TransformComponent{
             { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, glm::mat4(0) });
+
+        auto cam = Components::CameraComponent{
+            Components::eCameraRenderingMode::Orthographic,
+            true,
+            { 0.0, 0.0 },
+            glm::mat4(0),
+            glm::mat4(0)
+        };
+
+        Helpers::Components::DrawCamera(cam);
     }
 
     ImGui::Columns(1);

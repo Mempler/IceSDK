@@ -20,12 +20,9 @@ namespace IceSDK::ImGuiWidgets::Helpers::Components
         {
             ImGui::NextColumn();
 
-            auto modelMatrixOpen = false;
             { /* Labels */
                 ImGui::Text("Position");
                 ImGui::Text("Scale");
-
-                modelMatrixOpen = ImGui::TreeNodeEx("Model Matrix");
             }
 
             ImGui::NextColumn();
@@ -36,21 +33,6 @@ namespace IceSDK::ImGuiWidgets::Helpers::Components
             }
 
             ImGui::NextColumn();
-
-            ImGui::Columns(1);
-
-            if (modelMatrixOpen)
-            {
-                ImGui::Separator();
-
-                Helpers::DrawVec(transform.model_matrix[0]);
-                Helpers::DrawVec(transform.model_matrix[1]);
-                Helpers::DrawVec(transform.model_matrix[2]);
-                Helpers::DrawVec(transform.model_matrix[3]);
-
-                ImGui::TreePop();
-            }
-
             ImGui::TreePop();
         }
     }

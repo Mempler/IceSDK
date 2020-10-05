@@ -9,7 +9,7 @@ namespace IceSDK::Components
     enum class eCameraRenderingMode
     {
         Orthographic,
-        // Perspective, // Not supported (yet)
+        Perspective,  // Not supported (yet)
     };
 
     struct CameraComponent
