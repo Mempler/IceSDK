@@ -14,7 +14,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Generate Build Files
-        run: .\tools\win\gn.exe gen out
+        run: |
+          mkdir .\out\
+          Copy-Item .\.ide\GN\win\pc\args.gn -Destination .\out\args.gn
+          
+          .\tools\win\gn.exe gen out
+        shell: pwsh
 
       - name: Build IceSDK
         run: .\tools\win\ninja.exe -C out

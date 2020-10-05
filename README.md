@@ -1,3 +1,12 @@
+## How to setup
+```sh
+git clone https://github.com/Mempler/IceSDK
+
+
+# --ide=(`vscode`, `vs2017`, `vs2019`) --target?=(`android`, `emscripten`)
+python3 ./tools/setup.py --ide=vscode
+```
+
 ## Android
 ```
 .\tools\win\gn.exe gen out

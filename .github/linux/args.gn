@@ -1,5 +1,0 @@
-is_clang = true
-use_lld = true
-
-enable_unity_build = true
-use_ccache = true

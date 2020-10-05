@@ -1,8 +1,0 @@
-is_clang = true
-use_lld = true
-enable_unity_build = true
-
-clang_base_path = rebase_path("//emsdk/upstream")
-
-target_os = "emscripten"
-target_cpu = "wasm32"

@@ -18,32 +18,32 @@ namespace IceSDK::Math
             right = pos.x + size.x;
         }
 
-        T Width() { return right - left; }
+        T Width() const noexcept { return right - left; }
 
-        T Height() { return bottom - top; }
+        T Height() const noexcept { return bottom - top; }
 
-        T X() { return left; }
+        T X() const noexcept { return left; }
 
-        T Y() { return top; }
+        T Y() const noexcept { return top; }
 
-        glm::vec2 Position() { return { X(), Y() }; }
+        glm::vec2 Position() noexcept { return { X(), Y() }; }
 
-        glm::vec2 Size() { return { Width(), Height() }; }
+        glm::vec2 Size() noexcept { return { Width(), Height() }; }
 
-        T length() { return (left - right) * (top - bottom); }
+        T length() noexcept { return (left - right) * (top - bottom); }
     };
 
     typedef Rect<float> Rectf;
     typedef Rect<double> Rectd;
 
-    inline float Max(float x, float y)
+    constexpr float Max(float x, float y) noexcept
     {
         if (x > y) return x;
 
         return y;
     }
 
-    inline float Min(float x, float y)
+    constexpr inline float Min(float x, float y) noexcept
     {
         if (x > y) return y;
 

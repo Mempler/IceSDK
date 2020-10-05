@@ -7,19 +7,35 @@ namespace IceSDK
 {
     namespace FileSystem
     {
-        void MkDir(const std::string& pPath);
-        std::string JoinPath(const std::string& p1, const std::string& p2);
-        bool Exists(const std::string& pPath);
-        bool IsDirectory(const std::string& pPath);
-        std::vector<std::string> ReadDirectory(const std::string& pPath,
+        constexpr std::string_view GetFileName(std::string_view pPath) noexcept
+        {
+            for (auto i = pPath.size(); i > 0; --i)
+                if (pPath[i] == '/' || pPath[i] == '\\')
+                    return std::string_view(&pPath[0] + (i + 1));
+
+            return pPath;  // Not found...
+        }
+        constexpr bool HasExtension(std::string_view pPath,
+                                    std::string_view pExt) noexcept
+        {
+            if (pPath.length() < pExt.length()) return false;
+
+            return (0
+                    == pPath.compare(pPath.length() - pExt.length(),
+                                     pExt.length(), pExt));
+        }
+
+        void MkDir(std::string_view pPath);
+        std::string JoinPath(std::string_view p1, std::string_view p2);
+        bool Exists(std::string_view pPath);
+        bool IsDirectory(std::string_view pPath);
+        std::vector<std::string> ReadDirectory(std::string_view pPath,
                                                bool pRecursive = false);
-        std::string ResolveFullPath(const std::string& pPath);
-        std::vector<uint8_t> ReadBinaryFile(const std::string& pPath);
-        void WriteBinaryFile(const std::string& pPath,
-                             std::vector<uint8_t> pData);
-        bool HasExtension(const std::string& pPath, const std::string& pExt);
-        std::string GetFileName(const std::string& pPath);
-        void Touch(const std::string& pPath);
-        void Delete(const std::string& pPath);
+        std::string ResolveFullPath(std::string_view pPath);
+        std::vector<uint8_t> ReadBinaryFile(std::string_view pPath);
+        void WriteBinaryFile(std::string_view pPath,
+                             const std::vector<uint8_t>& pData);
+        void Touch(std::string_view pPath);
+        void Delete(std::string_view pPath);
     }  // namespace FileSystem
 }  // namespace IceSDK

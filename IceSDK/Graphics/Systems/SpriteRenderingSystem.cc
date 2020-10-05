@@ -13,7 +13,6 @@
 #include "Graphics/Components/ShaderComponent.h"
 #include "Graphics/Components/SpriteComponent.h"
 
-
 using namespace IceSDK;
 using namespace IceSDK::Systems;
 using namespace IceSDK::Components;
@@ -50,11 +49,7 @@ void SpriteRenderingSystem::Draw(float pDelta)
         const auto u_tex_colour =
             bgfx::createUniform("s_texColour", bgfx::UniformType::Sampler);
 
-        const glm::vec3 real_texture_scale = { sprite.size, 1.0f };
-        glm::mat4 matrix =
-            glm::scale(transform.model_matrix, real_texture_scale);
-
-        bgfx::setTransform(glm::value_ptr(matrix));
+        bgfx::setTransform(glm::value_ptr(transform.model_matrix));
 
         bgfx::setVertexBuffer(0, mesh.vertex_buffer);
         bgfx::setIndexBuffer(mesh.index_buffer);

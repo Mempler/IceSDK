@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
-
 #include "Utils/Buffer.h"
+
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 TEST(Buffer, PushI8)
 {
@@ -36,7 +36,8 @@ TEST(Buffer, PushI64)
 
     buffer.push<int64_t>(0xFFFFFFFFFFFFFFFA);
 
-    ASSERT_THAT(buffer.data(), testing::ElementsAre(0xFA, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF));
+    ASSERT_THAT(buffer.data(), testing::ElementsAre(0xFA, 0xFF, 0xFF, 0xFF,
+                                                    0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 TEST(Buffer, PushU8)
@@ -72,7 +73,8 @@ TEST(Buffer, PushU64)
 
     buffer.push<uint64_t>(0xFFFFFFFFFFFFFFFA);
 
-    ASSERT_THAT(buffer.data(), testing::ElementsAre(0xFA, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF));
+    ASSERT_THAT(buffer.data(), testing::ElementsAre(0xFA, 0xFF, 0xFF, 0xFF,
+                                                    0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 TEST(Buffer, PushFloat)
@@ -90,16 +92,19 @@ TEST(Buffer, PushDouble)
 
     buffer.push<double>(0.12345);
 
-    ASSERT_THAT(buffer.data(), testing::ElementsAre(0x7C, 0xF2, 0xB0, 0x50, 0x6B, 0x9A, 0xBF, 0x3F));
+    ASSERT_THAT(buffer.data(), testing::ElementsAre(0x7C, 0xF2, 0xB0, 0x50,
+                                                    0x6B, 0x9A, 0xBF, 0x3F));
 }
 
 TEST(Buffer, PushCString)
 {
     IceSDK::Buffer buffer;
 
-    buffer.push<const char *>("Hello World!");
+    buffer.push<const char*>("Hello World!");
 
-    ASSERT_THAT(buffer.data(), testing::ElementsAre('H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!'));
+    ASSERT_THAT(buffer.data(),
+                testing::ElementsAre('H', 'e', 'l', 'l', 'o', ' ', 'W', 'o',
+                                     'r', 'l', 'd', '!'));
 }
 
 TEST(Buffer, PushCPPString)
@@ -108,7 +113,9 @@ TEST(Buffer, PushCPPString)
 
     buffer.push<std::string>("Hello World!");
 
-    ASSERT_THAT(buffer.data(), testing::ElementsAre('H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!'));
+    ASSERT_THAT(buffer.data(),
+                testing::ElementsAre('H', 'e', 'l', 'l', 'o', ' ', 'W', 'o',
+                                     'r', 'l', 'd', '!'));
 }
 
 TEST(Buffer, PopI8)
@@ -205,9 +212,9 @@ TEST(Buffer, PopCString)
 {
     IceSDK::Buffer buffer;
 
-    buffer.push<const char *>("Hello World!");
+    buffer.push<const char*>("Hello World!");
 
-    ASSERT_STREQ(buffer.pop<const char *>(12), "Hello World!");
+    ASSERT_STREQ(buffer.pop<const char*>(12), "Hello World!");
 }
 
 TEST(Buffer, PopCPPString)

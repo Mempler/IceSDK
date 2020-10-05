@@ -1,7 +1,5 @@
 #include "pch.h"
 
-#include "Graphics/EntityHelper.h"
-
 #include "ECS/Components/BaseComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Scene.h"
@@ -12,6 +10,8 @@
 #include "Graphics/Components/ShaderComponent.h"
 #include "Graphics/Components/SpriteComponent.h"
 #include "Graphics/Components/TextComponent.h"
+#include "Graphics/Debug/Draw.h"
+#include "Graphics/EntityHelper.h"
 #include "Graphics/Shaders/compiled/fs_sprite.d3d11.h"
 #include "Graphics/Shaders/compiled/fs_sprite.d3d12.h"
 #include "Graphics/Shaders/compiled/fs_sprite.d3d9.h"
@@ -31,47 +31,25 @@ using namespace IceSDK;
 using namespace IceSDK::Graphics;
 using namespace IceSDK::Graphics::Entity;
 
-static bgfx::VertexLayout g_2DPosTexCoordColourLayout;
-struct Pos2DTexCoordColourVertex
-{
-    glm::vec2 pos;
-    glm::vec2 uv;
-    glm::vec4 colour;
-
-    static void Init()
-    {
-        ICESDK_PROFILE_FUNCTION();
-
-        g_2DPosTexCoordColourLayout.begin()
-            .add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float)
-            .add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
-            .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Float)
-            .end();
-    }
-};
-
-static Pos2DTexCoordColourVertex g_SpriteVertices[4] = {
-    { { 1.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-    { { 1.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-    { { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-    { { 0.0f, 1.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-};
-
-static const uint16_t g_SpriteIndices[6] = {
-    0, 1, 3, 1, 2, 3,
-};
-
 IceSDK::Entity Graphics::Entity::CreateSprite(
     Memory::Ptr<IceSDK::Scene> pScene,
     Memory::Ptr<Shaders::ShaderManager> pShaderManager,
-    Memory::Ptr<Texture2D> pTex)
+    Memory::Ptr<Texture2D> pTex, const glm::vec3& position,
+    const glm::vec2& size, float rotation)
 {
     ICESDK_PROFILE_FUNCTION();
 
     auto entity = pScene->CreateEntity("Sprite");
 
+    glm::vec2 TexSize{ 0 };
+    if (size.x != -1.f && size.y != -1.f)
+        TexSize = size;
+    else if (pTex != nullptr)
+        TexSize = { pTex->Width(), pTex->Height() };
+
     entity.AddComponent<IceSDK::Components::TransformComponent>(
-        glm::vec3{ 0.0f, 0.0f, 0.0f }, glm::vec3{ 1.0f, 1.0f, 1.0f });
+        position, glm::vec3{ TexSize.x, TexSize.y, 1.0f }, rotation);
+
     entity.AddComponent<Graphics::Components::MeshComponent>(
         bgfx::createVertexBuffer(
             bgfx::makeRef(g_SpriteVertices, sizeof g_SpriteVertices),
@@ -81,9 +59,6 @@ IceSDK::Entity Graphics::Entity::CreateSprite(
 
     entity.AddComponent<Graphics::Components::ShaderComponent>(
         pShaderManager.get()->LoadProgram("Sprite"));
-
-    glm::vec2 TexSize;
-    if (pTex != nullptr) TexSize = { pTex->Width(), pTex->Height() };
 
     entity.AddComponent<Graphics::Components::SpriteComponent>(TexSize, pTex);
 

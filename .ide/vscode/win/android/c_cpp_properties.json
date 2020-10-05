@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Emscripten",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/third-party/**/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "ICESDK_SDL2",
+                "ICESDK_FMOD",
+                "ICESDK_ANDROID"
+            ],
+            "compilerPath": "${workspaceFolder}/third-party/emsdk/upstream/bin/clang.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
