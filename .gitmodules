@@ -1,3 +1,6 @@
 [submodule "third-party/emsdk"]
 	path = third-party/emsdk
 	url = https://github.com/emscripten-core/emsdk.git
+[submodule "build"]
+	path = build
+	url = https://github.com/IceSDK/gn-build
