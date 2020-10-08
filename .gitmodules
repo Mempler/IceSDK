@@ -4,3 +4,6 @@
 [submodule "build"]
 	path = build
 	url = https://github.com/IceSDK/gn-build
+[submodule "tools"]
+	path = tools
+	url = https://github.com/IceSDK/IceSDK-Tools.git
