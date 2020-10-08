@@ -1,5 +1,0 @@
-group ("Tools") {
-    deps = [
-        "//tools/sources/AssetCompiler"
-    ]
-}
