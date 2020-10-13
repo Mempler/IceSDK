@@ -20,13 +20,13 @@ namespace IceFS
         Entry Data
     */
 
-    class FileSystem
+    class File
     {
     public:
-        FileSystem(std::string_view pPath);
+        File(std::string_view pPath);
 
         // Deconstruct will defrag && flush to disk if changed
-        ~FileSystem();
+        ~File();
 
         void Write(std::string_view pPath, const std::vector<uint8_t>& pData);
         std::vector<uint8_t> Read(std::string_view pPath);
@@ -45,7 +45,7 @@ namespace IceFS
         // fragmentation
         // inMemory = make sure we defrag everything in memory before writting
         // to disk else = do everything on the disk (this is much slower)
-        void Defrag(bool inMemory = false);
+        void Defrag(bool pInMemory = false);
 
         // Flush changes to disk. This won't defrag.
         void Flush();

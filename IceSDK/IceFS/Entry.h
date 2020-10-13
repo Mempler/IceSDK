@@ -26,6 +26,6 @@ namespace IceFS
         uint32_t BodySize = 0;
 
         // Padding to make each header exactly 64b
-        uint8_t _[0x40 - 1 - 4 - 8];
+        uint8_t _[0x40 - 1 - 4 - 4 - 8];
     };
 }  // namespace IceFS
