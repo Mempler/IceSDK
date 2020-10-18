@@ -3,6 +3,7 @@
 #include "Graphics/Fonts/FontFace.h"
 
 #include "Utils/FileSystem.h"
+#include "Utils/Instrumentor.h"
 #include "Utils/Logger.h"
 
 using namespace IceSDK;
@@ -13,6 +14,8 @@ static FT_Library g_FTLibrary;
 Memory::Ptr<FontFace> FontFace::FromMemory(const std::vector<uint8_t>& pData,
                                            size_t pFontSize)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     Memory::Ptr<FontFace> font = std::make_shared<FontFace>();
     FT_Error err;
 
@@ -67,6 +70,8 @@ Memory::Ptr<FontFace> FontFace::FromMemory(const std::vector<uint8_t>& pData,
 Memory::Ptr<FontFace> FontFace::FromFile(const std::string& pPath,
                                          size_t pFontSize)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (!FileSystem::Exists(pPath)) return nullptr;
 
     return FontFace::FromMemory(FileSystem::ReadBinaryFile(pPath), pFontSize);
@@ -74,6 +79,8 @@ Memory::Ptr<FontFace> FontFace::FromFile(const std::string& pPath,
 
 void FontFace::Init()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     FT_Error err;
 
     err = FT_Init_FreeType(&g_FTLibrary);
@@ -83,6 +90,8 @@ void FontFace::Init()
 
 void FontFace::SetSize(size_t size)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (this->_size == size) return;
     FT_Error err;
 
@@ -96,11 +105,15 @@ void FontFace::SetSize(size_t size)
 
 size_t FontFace::GetSize()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     return this->_size;
 }
 
 Glyph& FontFace::GetGlyph(uint32_t pGlyph)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     // We don't want a glyph to be loaded twice!
     if (this->_glyphCache.count(pGlyph)) return this->_glyphCache[pGlyph];
 

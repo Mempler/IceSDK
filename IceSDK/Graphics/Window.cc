@@ -65,8 +65,6 @@ GameWindow::GameWindow(int32_t pWidth, int32_t pHeight,
         ICESDK_CORE_CRITICAL("Failed to create window!");
 #endif
 
-    // bgfx::renderFrame();
-
     bgfx::PlatformData platformData;
 #ifdef ICESDK_GLFW
     #ifdef ICESDK_WIN32
@@ -152,6 +150,8 @@ void GameWindow::Update()
 
 #ifdef ICESDK_GLFW
     glfwPollEvents();
+
+    this->_should_exit = glfwWindowShouldClose(this->_window);
 #endif
 
 #ifdef ICESDK_SDL2
@@ -190,8 +190,6 @@ void GameWindow::Update()
     // This dummy draw call is here to make sure that view 0 is cleared if no
     // other draw calls are submitted to view 0.
     bgfx::touch(0);
-    // Use debug font to print information about this example.
-    bgfx::dbgTextClear();
 
     GetGameBase()->GetSpriteBatch()->NewFrame();
     if (this->_draw_init_callback != nullptr && !this->_initialized)
@@ -222,9 +220,7 @@ bool GameWindow::ShouldClose() const
 {
     ICESDK_PROFILE_FUNCTION();
 
-#ifdef ICESDK_GLFW
-    return glfwWindowShouldClose(this->_window);
-#elif defined(ICESDK_SDL2)
+#if defined(ICESDK_GLFW) || defined(ICESDK_SDL2)
     return _should_exit;
 #else
     #warning "Unknown Window Library"

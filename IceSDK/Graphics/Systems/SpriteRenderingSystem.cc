@@ -28,6 +28,7 @@ void SpriteRenderingSystem::Tick(float pDelta)
 void SpriteRenderingSystem::Draw(float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
+
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 
@@ -47,6 +48,7 @@ void SpriteRenderingSystem::Draw(float pDelta)
             || !bgfx::isValid(shader.handle))
             continue;
 
-        GetGameBase()->GetSpriteBatch()->SubmitTexturedQuad(sprite.texture, transform.position, sprite.size, { 1, 1, 1, 1 });
+        GetGameBase()->GetSpriteBatch()->SubmitTexturedQuad(
+            sprite.texture, transform.position, sprite.size, { 1, 1, 1, 1 });
     }
 }

@@ -5,14 +5,21 @@
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Entity.h"
 
+#include "Utils/Instrumentor.h"
+
 using namespace IceSDK;
 using namespace IceSDK::Systems;
 using namespace IceSDK::Components;
 
-void TransformSystem::Draw(float pDelta) { }
+void TransformSystem::Draw(float pDelta)
+{
+    ICESDK_PROFILE_FUNCTION();
+}
 
 void TransformSystem::Tick(float pDelta)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 

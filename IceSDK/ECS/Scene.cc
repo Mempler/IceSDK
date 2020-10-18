@@ -8,10 +8,14 @@
 #include "ECS/Systems/CameraSystem.h"
 #include "ECS/Systems/TransformSystem.h"
 
+#include "Utils/Instrumentor.h"
+
 using namespace IceSDK;
 
 Scene::Scene()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     this->_registry = std::make_shared<entt::registry>();
 
     CreateCamera();
@@ -23,6 +27,8 @@ Scene::Scene()
 
 Entity Scene::CreateEntity(const std::string& pName) const
 {
+    ICESDK_PROFILE_FUNCTION();
+
     auto entity = Entity(this->_registry);
 
     entity.AddComponent<Components::BaseComponent>(pName, true);
@@ -32,6 +38,8 @@ Entity Scene::CreateEntity(const std::string& pName) const
 
 Entity Scene::CreateCamera() const
 {
+    ICESDK_PROFILE_FUNCTION();
+
     auto entity = this->CreateEntity("Camera");
 
     entity.AddComponent<Components::TransformComponent>(
@@ -45,11 +53,17 @@ Entity Scene::CreateCamera() const
 
 void Scene::Tick(const float pDelta)
 {
+    ICESDK_PROFILE_FUNCTION();
+
+    std::lock_guard<std::mutex> systemLock(_mut_systems);
     for (auto system : this->_systems) { system->Tick(pDelta); }
 }
 
 void Scene::Draw(const float pDelta)
 {
+    ICESDK_PROFILE_FUNCTION();
+
+    std::lock_guard<std::mutex> systemLock(_mut_systems);
     for (auto system : this->_systems) { system->Draw(pDelta); }
 }
 

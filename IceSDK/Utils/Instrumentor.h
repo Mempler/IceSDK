@@ -196,8 +196,7 @@ namespace IceSDK
     }  // namespace InstrumentorUtils
 }  // namespace IceSDK
 
-#define ICESDK_PROFILE 1
-#if ICESDK_PROFILE
+#ifdef ICESDK_PROFILE
    // Resolve which function signature macro will be used. Note that this only
     // is resolved when the (pre)compiler starts, so the syntax highlighting
     // could mark the wrong one in your editor!

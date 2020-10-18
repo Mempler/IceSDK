@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Utils/Instrumentor.h"
 #include "Utils/Memory.h"
 
 #include <entt/entt.hpp>
@@ -17,12 +18,16 @@ namespace IceSDK
         template<typename T>
         bool HasComponent()
         {
+            ICESDK_PROFILE_FUNCTION();
+
             return this->_registry.lock()->has<T>(this->_inner);
         }
 
         template<typename T, typename... Args>
         T& AddComponent(Args&&... pArgs)
         {
+            ICESDK_PROFILE_FUNCTION();
+
             const auto registry = this->_registry.lock();
 
             return registry->emplace<T>(this->_inner,
@@ -32,6 +37,8 @@ namespace IceSDK
         template<typename T>
         T& GetComponent()
         {
+            ICESDK_PROFILE_FUNCTION();
+
             const auto registry = this->_registry.lock();
             return registry->get<T>(this->_inner);
         }
@@ -39,6 +46,8 @@ namespace IceSDK
         template<typename T>
         bool RemoveComponent(T pComponent)
         {
+            ICESDK_PROFILE_FUNCTION();
+
             if (!this->HasComponent(pComponent)) return false;
 
             const auto registry = this->_registry.lock();

@@ -6,6 +6,8 @@
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Entity.h"
 
+#include "Utils/Instrumentor.h"
+
 #include "GameBase.h"
 
 using namespace IceSDK;
@@ -14,6 +16,8 @@ using namespace IceSDK::Components;
 
 void CameraSystem::Draw(float pDelta)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     auto activeCam = CameraSystem::GetActiveCamera(this->_registry);
 
     if (!Entity::IsValid(activeCam)) return;
@@ -25,18 +29,25 @@ void CameraSystem::Draw(float pDelta)
 
 void CameraSystem::Tick(float pDelta)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     auto activeCam = CameraSystem::GetActiveCamera(this->_registry);
 
     if (!Entity::IsValid(activeCam)) return;
 
     auto& camera = activeCam.GetComponent<CameraComponent>();
-    auto& transform = activeCam.GetComponent<TransformComponent>();
 
     switch (camera.render_mode)
     {
     case eCameraRenderingMode::Orthographic:  // TODO: only execute if value
                                               // changed
         const auto window = GetWindow();
+
+        if (camera.screen_size
+            == glm::vec2{ window->Width(), window->Height() })
+            break;
+
+        auto& transform = activeCam.GetComponent<TransformComponent>();
 
         camera.screen_size = { window->Width(), window->Height() };
 

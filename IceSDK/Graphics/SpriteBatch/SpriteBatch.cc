@@ -2,6 +2,7 @@
 
 #include "SpriteBatch.h"
 
+#include "Utils/Instrumentor.h"
 #include "Utils/Logger.h"
 
 #include "GameBase.h"
@@ -10,6 +11,8 @@ using namespace IceSDK::Graphics;
 
 SpriteBatch::SpriteBatch()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     this->_vertexBuffer = new VertexInfo[_maxVertices];
     uint32_t* quads = new uint32_t[_maxIndices];
     uint32_t offset = 0;
@@ -55,6 +58,8 @@ SpriteBatch::~SpriteBatch() { }
 
 void SpriteBatch::NewFrame()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     this->_indexes = 0;
     this->_vertexBufferPtr = this->_vertexBuffer;
     this->_textureIndex = 0;
@@ -62,11 +67,15 @@ void SpriteBatch::NewFrame()
 
 void SpriteBatch::EndFrame()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     Flush();
 }
 
 void SpriteBatch::Flush()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (!this->_indexes) return;
 
     uint32_t data_size = (uint32_t)((uint8_t*) this->_vertexBufferPtr
@@ -100,6 +109,8 @@ void SpriteBatch::Flush()
 
 void SpriteBatch::FlushReset()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     EndFrame();
 
     this->_indexes = 0;
@@ -112,6 +123,8 @@ void SpriteBatch::SubmitTexturedQuad(Memory::Ptr<Texture2D> pTexture,
                                      const glm::vec2& pSize,
                                      const glm::vec4& pColour)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     CheckIndexes();
     glm::mat4 transform =
         glm::translate(glm::mat4(1.0f), { pPosition.x, pPosition.y, 1 })
@@ -134,6 +147,8 @@ void SpriteBatch::SubmitTiledSprite(Memory::Ptr<Texture2D> pTexture,
                                     const glm::vec4& pTileInfo,
                                     const glm::vec4& pColour)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     CheckIndexes();
     glm::mat4 transform =
         glm::translate(glm::mat4(1.0f), { pPosition.x, pPosition.y, 1 })
@@ -146,6 +161,8 @@ void SpriteBatch::SubmitTiledSprite(Memory::Ptr<Texture2D> pTexture,
 
 void SpriteBatch::CheckIndexes()
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (this->_indexes >= _maxIndices) FlushReset();
 }
 
@@ -155,6 +172,8 @@ void SpriteBatch::DrawIndexed(glm::mat4 pTransform,
                               const glm::vec4& pColour, float pTextureID,
                               uint32_t pIndexCount)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     for (size_t i = 0; i < QUAD_COUNT; i++)
     {
         this->_vertexBufferPtr->pos = pTransform * pVertexPosition[i];
@@ -170,6 +189,8 @@ void SpriteBatch::DrawIndexed(glm::mat4 pTransform,
 
 float SpriteBatch::SetTexture(Memory::Ptr<Texture2D> pTexture)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     float textureIndex = 0.0f;
     for (uint32_t i = 0; i < this->_textureIndex; i++)
     {
@@ -195,6 +216,8 @@ float SpriteBatch::SetTexture(Memory::Ptr<Texture2D> pTexture)
 std::array<glm::vec2, QUAD_COUNT> SpriteBatch::MakeTiled(
     Memory::Ptr<Texture2D> pTexture, const glm::vec4& pTileInfo)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     float X = (1.f / pTexture->Width()) * pTileInfo.x;
     float Y = 1.f - (1.f / pTexture->Height()) * pTileInfo.y;
     float W = (1.f / pTexture->Width()) * pTileInfo.z;

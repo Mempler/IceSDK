@@ -27,8 +27,8 @@ GameBase::GameBase()
 
     Audio::AudioSystem::Init();
 
-    this->_window =
-        std::make_shared<Graphics::GameWindow>(1280, 800, "IceSDK: Game Window");
+    this->_window = std::make_shared<Graphics::GameWindow>(
+        1280, 800, "IceSDK: Game Window");
     this->_audio_system = std::make_shared<Audio::AudioSystem>();
     this->_sprite_batch = std::make_shared<Graphics::SpriteBatch>();
     this->_asset_manager = std::make_shared<Assets::AssetManager>();

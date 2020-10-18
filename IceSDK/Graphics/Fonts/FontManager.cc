@@ -3,6 +3,7 @@
 #include "Graphics/Fonts/FontManager.h"
 
 #include "Utils/FileSystem.h"
+#include "Utils/Instrumentor.h"
 #include "Utils/Logger.h"
 
 using namespace IceSDK;
@@ -11,6 +12,8 @@ using namespace IceSDK::Graphics;
 std::tuple<Glyph, Memory::Ptr<FontFace>> FontManager::GetGlyph(
     FontFaceHandle pFont, uint32_t pGlyph, size_t pSize)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (pFont == INVALID_FONT_FACE_HANDLE)
         ICESDK_CORE_CRITICAL(
             "Passed FontFaceHandle is invalid! f: {} g: {} s: {}", pFont,
@@ -39,6 +42,8 @@ std::tuple<Glyph, Memory::Ptr<FontFace>> FontManager::GetGlyph(
 
 FontFaceHandle FontManager::LoadFont(const std::string& pPath)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     if (!FileSystem::Exists(pPath)) return INVALID_FONT_FACE_HANDLE;
 
     return FontManager::LoadFont(FileSystem::ReadBinaryFile(pPath));
@@ -46,6 +51,8 @@ FontFaceHandle FontManager::LoadFont(const std::string& pPath)
 
 FontFaceHandle FontManager::LoadFont(std::vector<uint8_t> pBuffer)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     auto fontHandle = this->_face_index++;
     auto font = FontFace::FromMemory(pBuffer, 12);  // 12 is the default face.
 

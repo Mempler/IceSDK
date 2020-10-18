@@ -24,5 +24,7 @@ Entity::Entity() { }
 
 bool Entity::IsValid(const Entity& pEntity)
 {
+    ICESDK_PROFILE_FUNCTION();
+
     return pEntity._inner != entt::null;
 }

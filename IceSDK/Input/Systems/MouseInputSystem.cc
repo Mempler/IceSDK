@@ -15,6 +15,7 @@ using namespace IceSDK::Systems;
 void MouseInputSystem::Tick(float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
+
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 
@@ -41,4 +42,7 @@ void MouseInputSystem::Tick(float pDelta)
     }
 }
 
-void MouseInputSystem::Draw(float pDelta) { }
+void MouseInputSystem::Draw(float pDelta)
+{
+    ICESDK_PROFILE_FUNCTION();
+}

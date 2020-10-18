@@ -53,6 +53,7 @@ void TextRenderingSystem::Tick(float pDelta)
 void TextRenderingSystem::Draw(float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
+
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 

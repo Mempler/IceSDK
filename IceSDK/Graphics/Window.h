@@ -65,9 +65,8 @@ namespace IceSDK
             GLFWwindow* _window = nullptr;
 #elif defined(ICESDK_SDL2)
             SDL_Window* _window = nullptr;
-
-            bool _should_exit = false;
 #endif
+            bool _should_exit = false;
 
             DrawCallback_t _draw_callback = nullptr;
             DrawInitCallback_t _draw_init_callback = nullptr;

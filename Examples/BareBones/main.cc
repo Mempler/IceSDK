@@ -33,7 +33,6 @@ protected:
         this->_boxTexture =
             this->GetAssetManager()->LoadTexture("/Assets/Box.png");
 
-        
         this->_boxTexture2 =
             this->GetAssetManager()->LoadTexture("/Assets/Ground.png");
 
@@ -64,6 +63,8 @@ protected:
     void Draw(float pDelta) override
     {
         ImGuiWidgets::SceneGraph::Frame(this->GetActiveScene());
+
+        ImGui::ShowDemoWindow();
     }
 
     /* Not really needed as we use Systems by default */

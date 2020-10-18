@@ -16,6 +16,7 @@ using namespace IceSDK::Systems;
 void KeyboardInputSystem::Tick(float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
+
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 
@@ -36,4 +37,7 @@ void KeyboardInputSystem::Tick(float pDelta)
     }
 }
 
-void KeyboardInputSystem::Draw(float pDelta) { }
+void KeyboardInputSystem::Draw(float pDelta)
+{
+    ICESDK_PROFILE_FUNCTION();
+}

@@ -14,6 +14,8 @@
 
 #include <bx/allocator.h>
 
+#include <thread>
+
 namespace IceSDK
 {
     class GameBase

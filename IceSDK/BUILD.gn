@@ -4,6 +4,8 @@ import ("//build/unity_build.gni") # Unity builds
 declare_args() {
     use_glfw = true
     use_sdl2 = false
+
+    enable_profiler = false
 }
 
 unity_lib("IceSDK") {
@@ -199,6 +201,10 @@ unity_lib("IceSDK") {
         if (is_linux) {
             defines += [ "SDL_VIDEO_DRIVER_X11" ]
         }
+    }
+
+    if (enable_profiler) {
+        defines += [ "ICESDK_PROFILE" ]
     }
 
     # HarfBuzz
