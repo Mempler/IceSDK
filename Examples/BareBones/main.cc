@@ -1,3 +1,4 @@
+#include "Utils/Instrumentor.h"
 #include "Utils/Logger.h"
 
 #include "GameBase.h"
@@ -6,6 +7,8 @@
 #include "Graphics/Fonts/FontFace.h"
 #include "Graphics/ImGui/Widgets/SceneGraph.h"
 #include "Graphics/SpriteBatch/SpriteBatch.h"
+#include "Graphics/TextureAtlas/Packer.h"
+#include "Graphics/Tilesheet/Tilesheet.h"
 
 #include <imgui.h>
 
@@ -30,34 +33,54 @@ protected:
         Graphics::Entity::Init(this->GetShaderManager());
         Graphics::Entity::InitScene(activeScene);
 
+        Graphics::Packer* packer = new Graphics::Packer(512, 512);
+
         this->_boxTexture =
             this->GetAssetManager()->LoadTexture("/Assets/Box.png");
 
         this->_boxTexture2 =
             this->GetAssetManager()->LoadTexture("/Assets/Ground.png");
 
-        this->_box = Graphics::Entity::CreateSprite(
-            activeScene, this->GetShaderManager(), this->_boxTexture,
-            { 0.f, 0.f, 0.f });
+        this->_tileset0 =
+            this->GetAssetManager()->LoadTexture("/Assets/mario.png");
+
+        _sheet = std::make_shared<Graphics::Tilesheet>(this->_tileset0, 16);
+
+        /*this->_box = Graphics::Entity::CreateSprite(
+            activeScene, this->GetShaderManager(), this->_tileset0,
+            { 100.f, 100.f, 0.f }, { 16, 16 }, _sheet->GetTile(0));
 
         this->_box2 = Graphics::Entity::CreateSprite(
             activeScene, this->GetShaderManager(), this->_boxTexture2,
-            { 400.f, 100.f, 0.f });
+            { 400.f, 100.f, 0.f });*/
 
-        // Make sure Roboto-Regular.ttf is in out/ folder!
+        for (size_t i = 0; i < _sheet->TileSize(); i++)
+        {
+            uint32_t x, y;
+            if (!packer->Push(16, 16, x, y))
+            {
+                break;
+            }
+ 
+            Graphics::Entity::CreateSprite(
+                activeScene, this->GetShaderManager(), this->_tileset0,
+                { 512 + x, y, 0.f }, { 16, 16 }, _sheet->GetTile(i));
+        }
 
-        // then uncomment this:
-        /*
-        this->_faceHandle =
-            this->GetFontManager()->LoadFont("Roboto-Regular.ttf");
+        packer->Clear();
 
-        if (this->_faceHandle == INVALID_FONT_FACE_HANDLE)
-            ICESDK_CRITICAL("Failed to load Font! (-1)");
+        for (size_t i = 0; i < _sheet->TileSize(); i++)
+        {
+            uint32_t x, y;
+            if (!packer->Push(16, 16, x, y))
+            {
+                break;
+            }
 
-        this->_text =
-            Graphics::Entity::CreateText(activeScene, this->GetShaderManager(),
-                                         "Hellö Wörld!", 16, _faceHandle);
-            */
+            Graphics::Entity::CreateSprite(
+                activeScene, this->GetShaderManager(), this->_tileset0,
+                { x, y, 0.f }, { 16, 16 }, _sheet->GetTile(i));
+        }
     }
 
     void Draw(float pDelta) override
@@ -73,9 +96,11 @@ protected:
 private:
     Entity _box;
     Entity _box2;
+
     Memory::Ptr<Graphics::Texture2D> _boxTexture;
     Memory::Ptr<Graphics::Texture2D> _boxTexture2;
-
+    Memory::Ptr<Graphics::Texture2D> _tileset0;
+    Memory::Ptr<Graphics::Tilesheet> _sheet;
     /* Make sure the code above is uncommented.
     Entity _text;
     IceSDK::Graphics::FontFaceHandle _faceHandle;

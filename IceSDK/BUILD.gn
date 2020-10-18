@@ -52,6 +52,9 @@ unity_lib("IceSDK") {
 
         "Graphics/SpriteBatch/SpriteBatch.cc",
 
+        "Graphics/Tilesheet/Tilesheet.cc",
+        "Graphics/TextureAtlas/Packer.cc",
+
         "Graphics/Systems/SpriteRenderingSystem.cc",
         "Graphics/Systems/TextRenderingSystem.cc",
 

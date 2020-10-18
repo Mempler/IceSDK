@@ -94,3 +94,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+
+#ifndef ICESDK_USE_IMGUI
+//#define ICESDK_USE_IMGUI 1
+#endif

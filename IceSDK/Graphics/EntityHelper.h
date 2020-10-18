@@ -20,7 +20,7 @@ namespace IceSDK::Graphics::Entity
         Memory::Ptr<Shaders::ShaderManager> pShaderManager,
         Memory::Ptr<Texture2D> pTex,
         const glm::vec3& pPosition = { 0.f, 0.f, 0.f },
-        const glm::vec2& pSize = { -1.f, -1.f }, float pRotation = 0.0f);
+        const glm::vec2& pSize = { -1.f, -1.f }, const glm::vec4& pTileinfo = { -1.f, -1.f, -1.f, -1.f }, float pRotation = 0.0f);
 
     IceSDK::Entity CreateText(
         Memory::Ptr<IceSDK::Scene> pScene,

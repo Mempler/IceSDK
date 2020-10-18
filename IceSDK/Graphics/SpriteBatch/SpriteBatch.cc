@@ -196,8 +196,16 @@ float SpriteBatch::SetTexture(Memory::Ptr<Texture2D> pTexture)
     {
         if (*this->_textureSlots[i] == *pTexture)
         {
-            textureIndex = (float) i;
-            break;
+            return i;
+
+            /*
+                ISSUE SOLVED
+                Changed:
+
+                ` textureIndex = (float)i;
+                  break;
+                `
+            */
         }
     }
 
@@ -219,14 +227,19 @@ std::array<glm::vec2, QUAD_COUNT> SpriteBatch::MakeTiled(
     ICESDK_PROFILE_FUNCTION();
 
     float X = (1.f / pTexture->Width()) * pTileInfo.x;
-    float Y = 1.f - (1.f / pTexture->Height()) * pTileInfo.y;
+    float Y = (1.f / pTexture->Height()) * pTileInfo.y;
     float W = (1.f / pTexture->Width()) * pTileInfo.z;
     float H = (1.f / pTexture->Height()) * pTileInfo.w;
 
+    /*
+    glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec2(0.0f, 0.0f),
+        glm::vec2(0.0f, 1.0f)
+    */
+
     std::array<glm::vec2, QUAD_COUNT> ret;
-    ret[0] = { X, Y };
+    ret[0] = { X + W, Y + H };
     ret[1] = { X + W, Y };
-    ret[2] = { X + W, Y - H };
-    ret[3] = { X, Y - H };
+    ret[2] = { X, Y };
+    ret[3] = { X, Y + H };
     return ret;
 }

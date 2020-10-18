@@ -6,10 +6,10 @@
 
 #include "Utils/Instrumentor.h"
 
-#include "Graphics/Components/MeshComponent.h"
 #include "Graphics/Components/ShaderComponent.h"
 #include "Graphics/Components/SpriteComponent.h"
 #include "Graphics/Components/TextComponent.h"
+#include "Graphics/Components/TileComponent.h"
 #include "Graphics/Debug/Draw.h"
 #include "Graphics/EntityHelper.h"
 #include "Graphics/Shaders/compiled/fs_sprite.d3d11.h"
@@ -35,7 +35,7 @@ IceSDK::Entity Graphics::Entity::CreateSprite(
     Memory::Ptr<IceSDK::Scene> pScene,
     Memory::Ptr<Shaders::ShaderManager> pShaderManager,
     Memory::Ptr<Texture2D> pTex, const glm::vec3& pPosition,
-    const glm::vec2& pSize, float pRotation)
+    const glm::vec2& pSize, const glm::vec4& pTileinfo, float pRotation)
 {
     ICESDK_PROFILE_FUNCTION();
 
@@ -50,17 +50,12 @@ IceSDK::Entity Graphics::Entity::CreateSprite(
     entity.AddComponent<IceSDK::Components::TransformComponent>(
         pPosition, glm::vec3{ 1.0f, 1.0f, 1.0f }, pRotation);
 
-    entity.AddComponent<Graphics::Components::MeshComponent>(
-        bgfx::createVertexBuffer(
-            bgfx::makeRef(g_SpriteVertices, sizeof g_SpriteVertices),
-            g_2DPosTexCoordColourLayout),
-        bgfx::createIndexBuffer(
-            bgfx::makeRef(g_SpriteIndices, sizeof g_SpriteIndices)));
-
-    entity.AddComponent<Graphics::Components::ShaderComponent>(
-        pShaderManager.get()->LoadProgram("Sprite"));
-
     entity.AddComponent<Graphics::Components::SpriteComponent>(TexSize, pTex);
+
+    if (pTileinfo.x != -1.f && pTileinfo.y != -1.f)
+    {
+        entity.AddComponent<Graphics::Components::TileComponent>(pTileinfo);
+    }
 
     return entity;
 }

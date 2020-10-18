@@ -190,16 +190,18 @@ void GameBase::InternalDraw(const float pDelta)
 // End Scene
 
 // Begin ImGui
-#ifdef ICESDK_GLFW
+#ifdef ICESDK_USE_IMGUI
+    #ifdef ICESDK_GLFW
     ImGui_ImplGlfw_NewFrame();
-#elif defined(ICESDK_SDL2)
+    #elif defined(ICESDK_SDL2)
     ImGui_ImplSDL2_NewFrame(game->_window->_window);
-#else
-    #warning "Undefined Graphics API"
-#endif
+    #else
+        #warning "Undefined Graphics API"
+    #endif
     ImGui::NewFrame();
     game->Draw(pDelta);
     imguiEndFrame();
+#endif
 }
 
 void GameBase::InternalTick(const float pDelta)
@@ -220,7 +222,7 @@ void GameBase::InternalDrawInit()
     ICESDK_PROFILE_FUNCTION();
 
     auto game = GetGameBase();
-
+#ifdef ICESDK_USE_IMGUI
     // Scene::Init(game->GetShaderManager());
 
     imguiCreate(16.0f, nullptr);
@@ -230,19 +232,19 @@ void GameBase::InternalDrawInit()
 
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;  // Enable Docking
 
-#ifdef ICESDK_ANDROID
+    #ifdef ICESDK_ANDROID
     io.ConfigFlags |= ImGuiConfigFlags_IsTouchScreen;  // Enable Touch
     io.FontGlobalScale = 3.0f;
-#endif
+    #endif
 
-#ifdef ICESDK_GLFW
+    #ifdef ICESDK_GLFW
     ImGui_ImplGlfw_InitForBGFX(game->_window->_window, true);
-#elif defined(ICESDK_SDL2)
+    #elif defined(ICESDK_SDL2)
     ImGui_ImplSDL2_InitForBGFX(game->_window->_window);
+    #endif
+
+// ImGuiWidgets::AssetBrowser::Init(game->GetAssetManager());
 #endif
-
-    // ImGuiWidgets::AssetBrowser::Init(game->GetAssetManager());
-
     game->InitDraw();
 }
 
@@ -251,9 +253,9 @@ void GameBase::InternalShutdown()
     ICESDK_PROFILE_FUNCTION();
 
     auto game = GetGameBase();
-
+#ifdef ICESDK_USE_IMGUI
     imguiDestroy();
-
+#endif
     game->Shutdown();
 }
 
