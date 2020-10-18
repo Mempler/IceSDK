@@ -173,7 +173,7 @@ template("IceSDK_Project") {
                 "//third-party/glfw/include", "//third-party/entt/single_include", "//third-party/glm", 
                 "//third-party/imgui", "//third-party/sdl2/include", "//third-party/spdlog/include",
                 "//third-party/freetype/include", "//third-party/harfbuzz/src", "//third-party/icu/source/common",
-                "//third-party/icu/source/i18n"
+                "//third-party/icu/source/i18n", "//third-party/box2d/include"
             ]
 
             deps += [

@@ -32,18 +32,15 @@ protected:
 
         this->_boxTexture =
             this->GetAssetManager()->LoadTexture("/Assets/Box.png");
-
-        
-        this->_boxTexture2 =
+        this->_groundTexture =
             this->GetAssetManager()->LoadTexture("/Assets/Ground.png");
 
         this->_box = Graphics::Entity::CreateSprite(
             activeScene, this->GetShaderManager(), this->_boxTexture,
-            { 0.f, 0.f, 0.f });
-
-        this->_box2 = Graphics::Entity::CreateSprite(
-            activeScene, this->GetShaderManager(), this->_boxTexture2,
-            { 400.f, 100.f, 0.f });
+            { 100.f, 100.f, 0.f });
+        this->_ground = Graphics::Entity::CreateSprite(
+            activeScene, this->GetShaderManager(), this->_groundTexture,
+            { 100.f, 200.f, 0.f }, { 100.f, 50.f });
 
         // Make sure Roboto-Regular.ttf is in out/ folder!
 
@@ -70,11 +67,11 @@ protected:
     void Update(float pDelta) override { }
 
 private:
+    Entity _ground;
     Entity _box;
     Entity _box2;
     Memory::Ptr<Graphics::Texture2D> _boxTexture;
-    Memory::Ptr<Graphics::Texture2D> _boxTexture2;
-
+    Memory::Ptr<Graphics::Texture2D> _groundTexture;
     /* Make sure the code above is uncommented.
     Entity _text;
     IceSDK::Graphics::FontFaceHandle _faceHandle;

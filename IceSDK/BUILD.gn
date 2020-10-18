@@ -63,6 +63,11 @@ unity_lib("IceSDK") {
         "Input/InputPipeline.cc",
         "Input/Systems/MouseInputSystem.cc",
         "Input/Systems/KeyboardInputSystem.cc",
+
+        #######################################################
+        #                       Physics                       #
+        #######################################################
+        "Physics/Systems/PhysicSystem.cc",
         
         #######################################################
         #                       Utils                         #
@@ -93,6 +98,11 @@ unity_lib("IceSDK") {
         #                        Maths                        #
         #######################################################
         "//third-party/glm",  # GLM
+
+        #######################################################
+        #                       Physics                       #
+        #######################################################
+        "//third-party/box2d/include",
 
         #######################################################
         #                     Utilities                       #
@@ -175,6 +185,7 @@ unity_lib("IceSDK") {
         "//third-party/freetype",
         "//third-party/harfbuzz:HarfBuzz",
         "//third-party/icu",
+        "//third-party/box2d",
     ]
 
     if (is_android) { # TODO: figure out how to link fmod with android
