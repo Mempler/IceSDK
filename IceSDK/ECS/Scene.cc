@@ -55,16 +55,22 @@ void Scene::Tick(const float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
 
-    std::lock_guard<std::mutex> systemLock(_mut_systems);
-    for (auto system : this->_systems) { system->Tick(pDelta); }
+    this->_mut_systems.lock();
+    for (auto system : this->_systems)
+    {
+        if (system != nullptr) system->Tick(pDelta);
+    }
+    this->_mut_systems.unlock();
 }
 
 void Scene::Draw(const float pDelta)
 {
     ICESDK_PROFILE_FUNCTION();
 
-    std::lock_guard<std::mutex> systemLock(_mut_systems);
-    for (auto system : this->_systems) { system->Draw(pDelta); }
+    for (auto system : this->_systems)
+    {
+        if (system != nullptr) system->Draw(pDelta);
+    }
 }
 
 Memory::WeakPtr<entt::registry> Scene::GetRegistry()

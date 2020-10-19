@@ -38,8 +38,6 @@ GameBase::GameBase()
     this->_input_pipeline = std::make_shared<Input::InputPipeline>();
 
     this->_asset_manager->Init();
-
-    ICESDK_PROFILE_END_SESSION();
 }
 
 GameBase::~GameBase()
@@ -56,13 +54,15 @@ GameBase::~GameBase()
 
 void GameBase::Run()
 {
-    ICESDK_PROFILE_BEGIN_SESSION("Runtime", "Benchmark-Runtime.json");
-
     this->Init();
 
     this->_input_pipeline->Init();
     this->_window->SetDrawCallback(GameBase::InternalDraw);
     this->_window->SetDrawInitCallback(GameBase::InternalDrawInit);
+
+    ICESDK_PROFILE_END_SESSION();
+
+    ICESDK_PROFILE_BEGIN_SESSION("Runtime", "Benchmark-Runtime.json");
 
 #ifndef ICESDK_EMSCRIPTEN
     this->_threaded_ticks = std::thread(GameBase::InternalThreadedTicks);

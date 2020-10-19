@@ -23,8 +23,9 @@ namespace IceSDK
 
             auto registry = Memory::WeakPtr<entt::registry>(this->_registry);
 
-            std::lock_guard<std::mutex> systemLock(_mut_systems);
+            this->_mut_systems.lock();
             _systems.push_back(std::make_shared<Sys>(registry));
+            this->_mut_systems.unlock();
         }
 
         Entity CreateCamera() const;
