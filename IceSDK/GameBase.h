@@ -51,7 +51,12 @@ namespace IceSDK
         static void InternalDrawInit();
         static void InternalShutdown();
 
+        static void InternalThreadedTicks();
+
         int64_t _last_delta;
+
+        std::thread _threaded_ticks;
+
 #ifdef ICESDK_EMSCRIPTEN
         static void InternalMainLoop(void* arg);
 #else

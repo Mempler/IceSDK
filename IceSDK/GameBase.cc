@@ -65,23 +65,18 @@ void GameBase::Run()
     this->_window->SetDrawInitCallback(GameBase::InternalDrawInit);
 
 #ifndef ICESDK_EMSCRIPTEN
+    this->_threaded_ticks = std::thread(GameBase::InternalThreadedTicks);
+
     while (!this->_exit)
     {
         ICESDK_PROFILE_SCOPE("GameBase::MainLoop");
 
         this->_window->Update();
 
-        // Calculate delta time
-        const auto now = bx::getHPCounter();
-        const auto frameTime = now - this->_last_delta;
-        this->_last_delta = now;
-
-        const auto freq = static_cast<float>(bx::getHPFrequency());
-        const auto delta = static_cast<float>(frameTime) / freq;
-
-        GameBase::InternalTick(delta);
         if (this->_window->ShouldClose()) break;
     }
+
+    this->_threaded_ticks.join();
 #endif
 
 #ifdef ICESDK_EMSCRIPTEN
@@ -93,6 +88,27 @@ void GameBase::Run()
     ICESDK_PROFILE_BEGIN_SESSION("Shutdown", "Benchmark-Shutdown.json");
     GameBase::InternalShutdown();
     ICESDK_PROFILE_END_SESSION();
+}
+
+void GameBase::InternalThreadedTicks()
+{
+    auto game = GetGameBase();
+
+    while (!game->_exit)
+    {
+        ICESDK_PROFILE_SCOPE("GameBase::ThreadedMainLoop");
+
+        // Calculate delta time
+        const auto now = bx::getHPCounter();
+        const auto frameTime = now - game->_last_delta;
+        game->_last_delta = now;
+
+        const auto freq = static_cast<float>(bx::getHPFrequency());
+        const auto delta = static_cast<float>(frameTime) / freq;
+
+        GameBase::InternalTick(delta);
+        if (game->_window->ShouldClose()) break;
+    }
 }
 
 #ifdef ICESDK_EMSCRIPTEN
