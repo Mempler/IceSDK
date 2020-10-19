@@ -32,18 +32,20 @@ void SpriteRenderingSystem::Draw(float pDelta)
     const auto registry = this->_registry.lock();
     if (registry == nullptr) return;
 
-    auto spriteGroup = registry->view<SpriteComponent>();
+    auto spriteGroup =
+        registry->group<SpriteComponent>(entt::get<TransformComponent>);
     for (auto rawSpriteEntity : spriteGroup)
     {
+        ICESDK_PROFILE_SCOPE("Sprite Render");
+
         auto spriteEntity = Entity(this->_registry, rawSpriteEntity);
 
-        auto& transform = spriteEntity.GetComponent<TransformComponent>();
         auto& sprite = spriteEntity.GetComponent<SpriteComponent>();
-
         if (sprite.texture == nullptr
             || !bgfx::isValid(sprite.texture->GetHandle()))
             continue;
 
+        auto& transform = spriteEntity.GetComponent<TransformComponent>();
         if (spriteEntity.HasComponent<TileComponent>())
         {
             auto& tile = spriteEntity.GetComponent<TileComponent>();

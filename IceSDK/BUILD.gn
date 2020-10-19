@@ -6,6 +6,7 @@ declare_args() {
     use_sdl2 = false
 
     enable_profiler = false
+    use_imgui = true
 }
 
 unity_lib("IceSDK") {
@@ -208,6 +209,10 @@ unity_lib("IceSDK") {
 
     if (enable_profiler) {
         defines += [ "ICESDK_PROFILE" ]
+    }
+
+    if (use_imgui) {
+        defines += [ "ICESDK_USE_IMGUI" ]
     }
 
     # HarfBuzz
