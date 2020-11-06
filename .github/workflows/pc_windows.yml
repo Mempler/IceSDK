@@ -13,18 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install Required Packages
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install ninja --accept-license -y
+
       - name: Generate Build Files
         run: |
-          mkdir .\out\
-          Copy-Item .\.ide\GN\win\pc\args.gn -Destination .\out\args.gn
-          
-          .\tools\win\gn.exe gen out
+          mkdir .\build\
+          cd .\build\
+
+          cmake .. -DICESDK_BUILD_TESTS=ON -DICESDK_USE_FMOD=OFF -DCMAKE_BUILD_TYPE=Release -G Ninja
         shell: pwsh
 
       - name: Build IceSDK
-        run: .\tools\win\ninja.exe -C out
-      
+        run: ninja -C build
+        shell: pwsh
+
       - name: Execute Tests
-        run: |
-          cd out
-          .\TestIceSDK
+        run: .\build\bin\TestIceSDK

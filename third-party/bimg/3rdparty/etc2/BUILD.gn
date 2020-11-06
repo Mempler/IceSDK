@@ -1,7 +1,6 @@
 static_library("etc2") {
     sources = [
-        "ProcessRGB.cpp",
-        "Tables.cpp",
+
     ]
 
     include_dirs = [

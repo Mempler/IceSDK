@@ -16,30 +16,19 @@ jobs:
       - name: Install Required Packages
         run: |
           sudo apt update
-          sudo apt install -y build-essential git libglfw3-dev libfreetype-dev ccache clang
+          sudo apt install -y build-essential git ccache libgl1-mesa-dev ninja-build
 
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: /tmp/ccache
-          key: ${{ runner.os }}-emscripten-${{ hashFiles('**/*.manifest') }}
+          git submodule update --init --recursive
 
       - name: Generate Build Files
         run: |
-          mkdir -p ./out
-          cp ./.ide/GN/linux/pc/args.gn ./out/args.gn
-          
-          chmod +x ./tools/linux/gn
-          ./tools/linux/gn gen out
+          mkdir -p ./build
+          cd build && cmake .. -DICESDK_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       - name: Build IceSDK
-        run: |
-          export CCACHE_DIR=/tmp/ccache
-          chmod +x ./tools/linux/ninja
-          ./tools/linux/ninja -C out
+        run: ninja -C build
 
       - name: Execute Tests
         run: |
-          cd out
-          ./TestIceSDK
+          cd build/bin/ && ./TestIceSDK
   

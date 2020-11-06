@@ -14,8 +14,6 @@
 #include "Graphics/Components/TextComponent.h"
 #include "Graphics/Fonts/FontManager.h"
 
-#include <hb-icu.h>
-
 using namespace IceSDK;
 using namespace IceSDK::Systems;
 using namespace IceSDK::Graphics;
@@ -76,10 +74,6 @@ void TextRenderingSystem::Draw(float pDelta)
             auto font = fontFace->_hb_font();
 
             hb_buffer_reset(buffer);
-
-            hb_unicode_funcs_t* icufunctions;
-            icufunctions = hb_icu_get_unicode_funcs();
-            hb_buffer_set_unicode_funcs(buffer, icufunctions);
 
             hb_buffer_add_utf8(buffer, text.text.c_str(), text.text.length(), 0,
                                text.text.length());

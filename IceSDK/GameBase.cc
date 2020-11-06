@@ -190,9 +190,7 @@ void GameBase::InternalDraw(const float pDelta)
 // End Scene
 
 // Begin ImGui
-#ifdef ICESDK_GLFW
-    ImGui_ImplGlfw_NewFrame();
-#elif defined(ICESDK_SDL2)
+#ifdef ICESDK_SDL2
     ImGui_ImplSDL2_NewFrame(game->_window->_window);
 #else
     #warning "Undefined Graphics API"
@@ -235,9 +233,7 @@ void GameBase::InternalDrawInit()
     io.FontGlobalScale = 3.0f;
 #endif
 
-#ifdef ICESDK_GLFW
-    ImGui_ImplGlfw_InitForBGFX(game->_window->_window, true);
-#elif defined(ICESDK_SDL2)
+#ifdef ICESDK_SDL2
     ImGui_ImplSDL2_InitForBGFX(game->_window->_window);
 #endif
 

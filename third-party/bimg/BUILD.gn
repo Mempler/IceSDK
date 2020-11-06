@@ -1,14 +1,6 @@
 import("//IceSDK/IceSDK.gni")
 
 static_library("bimg") {
-    sources = [
-        "src/image.cpp",
-        "src/image_cubemap_filter.cpp",
-        "src/image_decode.cpp",
-        "src/image_encode.cpp",
-        "src/image_gnf.cpp",
-    ]
-
     include_dirs = [
         "include", "//third-party/bx/include",
         "3rdparty", "3rdparty/astc-codec/include", "3rdparty/iqa/include",

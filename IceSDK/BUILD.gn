@@ -8,67 +8,7 @@ declare_args() {
 
 unity_lib("IceSDK") {
     sources = [
-        "GameBase.cc",
 
-        #######################################################
-        #                      Assets                         #
-        #######################################################
-        "Assets/AssetFile.cc",
-        "Assets/AssetManager.cc",
-        "Assets/AudioAsset.cc",
-        "Assets/ShaderAsset.cc",
-        "Assets/TextAsset.cc",
-        "Assets/Texture2DAsset.cc",
-
-        #######################################################
-        #                       Audio                         #
-        #######################################################
-        "Audio/Sound.cc",
-        "Audio/AudioSystem.cc",
-
-        #######################################################
-        #                        ECS                          #
-        #######################################################
-        "ECS/Entity.cc",
-        "ECS/Scene.cc",
-        "ECS/System.cc",
-
-        "ECS/Systems/CameraSystem.cc",
-        "ECS/Systems/TransformSystem.cc",
-
-        #######################################################
-        #                     Graphics                        #
-        #######################################################
-        "Graphics/Window.cc",
-        "Graphics/Texture2D.cc",
-        "Graphics/GraphicsEntityHelper.cc",
-
-        "Graphics/Fonts/FontFace.cc",
-        "Graphics/Fonts/FontManager.cc",
-
-        "Graphics/Shaders/ShaderManager.cc",
-
-        "Graphics/SpriteBatch/SpriteBatch.cc",
-
-        "Graphics/Systems/SpriteRenderingSystem.cc",
-        "Graphics/Systems/TextRenderingSystem.cc",
-
-        "Graphics/ImGui/bgfx_imgui.cc",
-#       "ImGui/Widgets/AssetBrowser.cc",
-        "Graphics/ImGui/Widgets/SceneGraph.cc",
-
-        #######################################################
-        #                       Input                         #
-        #######################################################
-        "Input/InputPipeline.cc",
-        "Input/Systems/MouseInputSystem.cc",
-        "Input/Systems/KeyboardInputSystem.cc",
-        
-        #######################################################
-        #                       Utils                         #
-        #######################################################
-        "Utils/FileSystem.cc",
-        "Utils/Logger.cc",
     ]
     include_dirs = [
         "//IceSDK",

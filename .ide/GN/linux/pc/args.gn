@@ -1,9 +1,0 @@
-# LLVM compiles faster than gcc
-is_clang = true
-use_lld = true
-
-# Faster compilation for a lot of files
-enable_unity_build = true
-
-# Cache our compile results using ccache
-use_ccache = true

@@ -12,12 +12,12 @@
     #include <Windows.h>
 #elif defined(ICESDK_LINUX) || defined(ICESDK_ANDROID)
     #include <sys/stat.h>
-    #include <sys/types.h>
 
+    #include <fcntl.h>
     #include <dirent.h>
-    #include <stdlib.h>
     #include <unistd.h>
 
+    #include <cstdlib>
 #elif defined(ICESDK_EMSCRIPTEN)
     #include <sys/stat.h>
 
@@ -67,7 +67,7 @@ bool FileSystem::IsDirectory(std::string_view pPath)
     return GetFileAttributes(pPath.data()) & FILE_ATTRIBUTE_DIRECTORY;
 #elif defined(ICESDK_LINUX) || defined(ICESDK_EMSCRIPTEN)                      \
     || defined(ICESDK_ANDROID)
-    struct stat st;
+    struct stat st{};
     stat(pPath.data(), &st);
     return S_ISDIR(st.st_mode);
 #else
@@ -154,7 +154,6 @@ std::string FileSystem::ResolveFullPath(std::string_view pPath)
 #else
     #error "Platform not implemented!"
 #endif
-    return "";
 }
 
 std::vector<uint8_t> FileSystem::ReadBinaryFile(std::string_view pPath)
@@ -225,8 +224,6 @@ void FileSystem::MkDir(std::string_view pPath)
     #error "Platform not implemented!"
 #endif
 }
-
-#include <iostream>
 
 void FileSystem::Touch(std::string_view pPath)
 {

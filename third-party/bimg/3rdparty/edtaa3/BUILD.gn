@@ -1,5 +1,0 @@
-static_library("edtaa3") {
-    sources = [
-        "edtaa3func.cpp",
-    ]
-}

@@ -356,6 +356,8 @@ internal::ValueArray<T...> Values(T... v) {
 // }
 // INSTANTIATE_TEST_SUITE_P(BoolSequence, FlagDependentTest, Bool());
 //
+
+#undef Bool
 inline internal::ParamGenerator<bool> Bool() {
   return Values(false, true);
 }

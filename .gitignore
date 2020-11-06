@@ -1,4 +1,7 @@
 out/
 .vscode/
 .idea/
+.vs/
 *.log
+build/
+cmake-build-*

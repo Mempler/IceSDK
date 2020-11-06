@@ -1,5 +1,0 @@
-static_library("etc1") {
-    sources = [
-        "etc1.cpp",
-    ]
-}

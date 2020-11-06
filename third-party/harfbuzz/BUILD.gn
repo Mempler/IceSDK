@@ -1,22 +1,5 @@
 static_library("HarfBuzz") {
-    sources = [
-        "src/harfbuzz.cc",
-        "src/hb-icu.cc"
-    ]
-    defines = [
-        "HAVE_FREETYPE",
-        "HB_NO_GETENV", # incompatible with spdlog
-        "HAVE_ICU"
-    ]
-    libs = [ ]
 
-    if (is_posix && !is_emscripten) {
-        defines += [ "HAVE_PTHREAD" ]
-    }
-
-    if (is_emscripten) {
-        defines += [ "HB_NO_MT" ]
-    }
 
     deps = [
         "//third-party/freetype",

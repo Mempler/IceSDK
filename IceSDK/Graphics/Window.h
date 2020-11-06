@@ -7,9 +7,7 @@
 #include <functional>
 #include <string>
 
-#ifdef ICESDK_GLFW
-    #include <GLFW/glfw3.h>
-#elif defined(ICESDK_SDL2)
+#if defined(ICESDK_SDL2)
     #include <SDL.h>
 #endif
 
@@ -47,23 +45,14 @@ namespace IceSDK
             uint32_t Width() const;
             uint32_t Height() const;
 
-#if defined(ICESDK_GLFW)
-            GLFWwindow* GetNativeWindow() { return this->_window; }
-#elif defined(ICESDK_SDL2)
+#if defined(ICESDK_SDL2)
             SDL_Window* GetNativeWindow() { return this->_window; }
 #endif
 
         private:
             friend GameBase;
 
-#ifdef ICESDK_GLFW
-            static void ResizeGameWindow(GLFWwindow* pWindow, int pWidth,
-                                         int pHeight);
-#endif
-
-#ifdef ICESDK_GLFW
-            GLFWwindow* _window = nullptr;
-#elif defined(ICESDK_SDL2)
+#if defined(ICESDK_SDL2)
             SDL_Window* _window = nullptr;
 
             bool _should_exit = false;

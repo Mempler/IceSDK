@@ -9,45 +9,12 @@
 
 using namespace IceSDK::Graphics;
 
-#ifdef ICESDK_GLFW
-void GameWindow::ResizeGameWindow(GLFWwindow* pWindow, const int pWidth,
-                                  const int pHeight)
-{
-    ICESDK_PROFILE_FUNCTION();
-    auto* self = static_cast<GameWindow*>(glfwGetWindowUserPointer(pWindow));
-
-    self->_width = static_cast<uint32_t>(pWidth);
-    self->_height = static_cast<uint32_t>(pHeight);
-
-    bgfx::reset(self->_width, self->_height, BGFX_RESET_NONE);
-    bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
-
-    self->Update();
-}
-#endif
-
 GameWindow::GameWindow(int32_t pWidth, int32_t pHeight,
                        const std::string& pTitle, const eGameWindowFlags pFlags)
 {
     ICESDK_PROFILE_FUNCTION();
 
-#ifdef ICESDK_GLFW
-    if (!glfwInit()) ICESDK_CORE_CRITICAL("Failed to initialize GLFW!");
-
-    GLFWmonitor* monitor = nullptr;
-    if (pFlags & eGameWindowFlags::Fullscreen)
-        monitor = glfwGetPrimaryMonitor();
-
-    // glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    this->_window =
-        glfwCreateWindow(pWidth, pHeight, pTitle.c_str(), monitor, nullptr);
-    if (this->_window == nullptr)
-        ICESDK_CORE_CRITICAL("Failed to create window!");
-
-    glfwSetWindowUserPointer(this->_window, this);
-    glfwSetWindowSizeCallback(this->_window, &GameWindow::ResizeGameWindow);
-#elif defined(ICESDK_SDL2)
+#ifdef ICESDK_SDL2
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
         ICESDK_CORE_CRITICAL("Failed to initialize SDL2!");
 
@@ -68,15 +35,7 @@ GameWindow::GameWindow(int32_t pWidth, int32_t pHeight,
     // bgfx::renderFrame();
 
     bgfx::PlatformData platformData;
-#ifdef ICESDK_GLFW
-    #ifdef ICESDK_WIN32
-    platformData.nwh = glfwGetWin32Window(this->_window);
-    #elif defined(ICESDK_LINUX)
-    platformData.nwh = (void*) glfwGetX11Window(this->_window);
-    #else
-        #error "Platform not implemented!"
-    #endif
-#elif defined(ICESDK_SDL2)
+#ifdef ICESDK_SDL2
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version)
     SDL_GetWindowWMInfo(this->_window, &wmInfo);
@@ -98,7 +57,6 @@ GameWindow::GameWindow(int32_t pWidth, int32_t pHeight,
     #else
         #error "Platform not implemented!"
     #endif
-
 #endif
 
     this->_width = static_cast<uint32_t>(pWidth);
@@ -139,20 +97,11 @@ GameWindow::~GameWindow()
 {
     ICESDK_PROFILE_FUNCTION();
     bgfx::shutdown();
-
-#ifdef ICESDK_GLFW
-    glfwDestroyWindow(this->_window);
-    glfwTerminate();
-#endif
 }
 
 void GameWindow::Update()
 {
     ICESDK_PROFILE_FUNCTION();
-
-#ifdef ICESDK_GLFW
-    glfwPollEvents();
-#endif
 
 #ifdef ICESDK_SDL2
     SDL_Event e;
@@ -222,9 +171,7 @@ bool GameWindow::ShouldClose() const
 {
     ICESDK_PROFILE_FUNCTION();
 
-#ifdef ICESDK_GLFW
-    return glfwWindowShouldClose(this->_window);
-#elif defined(ICESDK_SDL2)
+#ifdef ICESDK_SDL2
     return _should_exit;
 #else
     #warning "Unknown Window Library"

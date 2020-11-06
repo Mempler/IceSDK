@@ -16,7 +16,7 @@ namespace IceSDK
             return input;
         }
 
-        constexpr uint64_t CalculateHash(std::string_view input)
+        uint64_t CalculateHash(std::string_view input)
         {
             if (input.empty()) return 0;
 

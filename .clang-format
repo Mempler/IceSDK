@@ -131,7 +131,6 @@ BinPackArguments: true
 #
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterEnum: true
   AfterStruct: true
   AfterClass: true
   AfterNamespace: true
@@ -206,7 +205,6 @@ IncludeCategories:
 
 
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: BeforeColon
@@ -221,7 +219,6 @@ IndentPPDirectives: BeforeHash
 KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: All
-PointerAlignment: Left
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: false

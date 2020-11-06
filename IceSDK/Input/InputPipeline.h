@@ -41,14 +41,5 @@ namespace IceSDK::Input
 
         std::unordered_map<MouseTable, ButtonState> _mouse_state;
         std::unordered_map<KeyboardTable, ButtonState> _keyboard_state;
-
-#if defined(ICESDK_GLFW)
-        static void MouseButtonCallback(GLFWwindow* pWnd, int pButton,
-                                        int pButtonState, int pMods);
-        static void CursorCallback(GLFWwindow* pWnd, double pX, double pY);
-        static void ScrollCallback(GLFWwindow* pWnd, double pX, double pY);
-        static void KeybrdCallback(GLFWwindow* pWnd, int pKey, int pScanCode,
-                                   int pButtonState, int pMods);
-#endif
     };
 }  // namespace IceSDK::Input
