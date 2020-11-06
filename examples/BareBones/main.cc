@@ -2,7 +2,6 @@
 
 #include "GameBase.h"
 #include "Graphics/Debug/Draw.h"
-#include "Graphics/EntityHelper.h"
 #include "Graphics/Fonts/FontFace.h"
 #include "Graphics/ImGui/Widgets/SceneGraph.h"
 #include "Graphics/SpriteBatch/SpriteBatch.h"
@@ -26,29 +25,24 @@ protected:
         auto activeSceneLock = this->GetActiveScene();
         auto activeScene = activeSceneLock.lock();
 
-        // TODO: let GameBase initialize this.
-        Graphics::Entity::Init(this->GetShaderManager());
-        Graphics::Entity::InitScene(activeScene);
-
         this->_boxTexture =
             this->GetAssetManager()->LoadTexture("/Assets/Box.png");
-
-        
         this->_boxTexture2 =
             this->GetAssetManager()->LoadTexture("/Assets/Ground.png");
 
-        this->_box = Graphics::Entity::CreateSprite(
-            activeScene, this->GetShaderManager(), this->_boxTexture,
-            { 0.f, 0.f, 0.f });
-
-        this->_box2 = Graphics::Entity::CreateSprite(
-            activeScene, this->GetShaderManager(), this->_boxTexture2,
-            { 400.f, 100.f, 0.f });
+        /* clang-format off */ 
+        // Simple sprite
+        this->_box =
+                activeScene->CreateEntity("Box")
+                            .Sprite(_boxTexture);
+        this->_box2 =
+                activeScene->CreateEntity("Long Box")
+                            .Position({ 400.f, 100.f, 0.f })
+                            .Sprite(this->_boxTexture2);
+        /* clang-format on */
 
         // Make sure Roboto-Regular.ttf is in out/ folder!
-
-        // then uncomment this:
-        /*
+        /* then uncomment this:
         this->_faceHandle =
             this->GetFontManager()->LoadFont("Roboto-Regular.ttf");
 
@@ -56,9 +50,9 @@ protected:
             ICESDK_CRITICAL("Failed to load Font! (-1)");
 
         this->_text =
-            Graphics::Entity::CreateText(activeScene, this->GetShaderManager(),
-                                         "Hellö Wörld!", 16, _faceHandle);
-            */
+                activeScene->CreateEntity("Some Text")
+                            .Text("Hellö Wörld!", 16, _faceHandle);
+        */
     }
 
     void Draw(float pDelta) override

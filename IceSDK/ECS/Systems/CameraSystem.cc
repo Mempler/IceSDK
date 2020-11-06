@@ -35,7 +35,7 @@ void CameraSystem::Tick(float pDelta)
     switch (camera.render_mode)
     {
     case eCameraRenderingMode::Orthographic:  // TODO: only execute if value
-                                              // changed
+        // changed
         const auto window = GetWindow();
 
         camera.screen_size = { window->Width(), window->Height() };

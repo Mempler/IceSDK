@@ -21,6 +21,7 @@ add_library(IceSDK STATIC
         #                        ECS                          #
         #######################################################
         ECS/Entity.cc
+        ECS/EntityExtension.cc
         ECS/Scene.cc
         ECS/System.cc
 
@@ -32,7 +33,6 @@ add_library(IceSDK STATIC
         #######################################################
         Graphics/Window.cc
         Graphics/Texture2D.cc
-        Graphics/GraphicsEntityHelper.cc
 
         Graphics/Fonts/FontFace.cc
         Graphics/Fonts/FontManager.cc

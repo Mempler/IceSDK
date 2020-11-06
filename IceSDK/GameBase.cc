@@ -6,6 +6,7 @@
 #include "Utils/Logger.h"
 
 #include "Graphics/ImGui/bgfx_imgui.h"
+#include "Graphics/Systems/SpriteRenderingSystem.h"
 
 using namespace IceSDK;
 
@@ -27,8 +28,8 @@ GameBase::GameBase()
 
     Audio::AudioSystem::Init();
 
-    this->_window =
-        std::make_shared<Graphics::GameWindow>(1280, 800, "IceSDK: Game Window");
+    this->_window = std::make_shared<Graphics::GameWindow>(
+        1280, 800, "IceSDK: Game Window");
     this->_audio_system = std::make_shared<Audio::AudioSystem>();
     this->_sprite_batch = std::make_shared<Graphics::SpriteBatch>();
     this->_asset_manager = std::make_shared<Assets::AssetManager>();
@@ -60,6 +61,7 @@ void GameBase::Run()
 
     this->Init();
 
+    Systems::SpriteRenderingSystem::Init();
     this->_input_pipeline->Init();
     this->_window->SetDrawCallback(GameBase::InternalDraw);
     this->_window->SetDrawInitCallback(GameBase::InternalDrawInit);

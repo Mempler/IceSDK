@@ -4,7 +4,6 @@
 #pragma once
 
 #include "GameBase.h"
-#include "Graphics/EntityHelper.h"
 #include "Graphics/Texture2D.h"
 
 #include <bgfx/bgfx.h>

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <string_view>
 #include <cstring>
 #include <iostream>
 #include <vector>
@@ -34,6 +36,17 @@ namespace IceSDK
 
                 this->push(inner.c_str());
             }
+
+            if (std::is_same<T, std::string_view>::value)  // Implementation for
+                // wrapping strings
+            {
+                auto inner = *(std::string*) (&val);
+                vPtr = nullptr;
+                vSz = 0;
+
+                this->push(inner.c_str());
+            }
+
 
             if (std::is_same<T, const char*>::value)  // Implementation for
                                                       // wrapping const char*

@@ -4,6 +4,10 @@
 
 #include <entt/entt.hpp>
 
+#include "Graphics/Texture2D.h"
+#include "Graphics/Shaders/ShaderManager.h"
+#include "Graphics/Fonts/FontManager.h"
+
 namespace IceSDK
 {
     class Entity final
@@ -37,15 +41,58 @@ namespace IceSDK
         }
 
         template<typename T>
-        bool RemoveComponent(T pComponent)
+        void RemoveComponent()
         {
-            if (!this->HasComponent(pComponent)) return false;
-
             const auto registry = this->_registry.lock();
-            registry->remove_all(this->_inner, pComponent);
-
-            return true;
+            registry->remove_if_exists<T>(this->_inner);
         }
+
+        // Position
+        //  Comment:
+        //      Sets the position of an Entity using the TransformComponent
+        //  Components:
+        //      - TransformComponent
+        Entity& Position(glm::vec3 pPosition);
+        // Scale
+        //  Comment:
+        //      Sets the scale of an Entity using the TransformComponent
+        //  Components:
+        //      - TransformComponent
+        Entity& Scale(glm::vec3 pScale);
+        // Rotation
+        //  Comment:
+        //      Sets the rotation of an Entity using the TransformComponent
+        //  Components:
+        //      - TransformComponent
+        Entity& Rotation(float pDegrees);
+
+        // DefaultTransformation
+        //  Comment:
+        //      Attaches a default TransformComponent if doesn't exist
+        //  Components:
+        //      - TransformComponent
+        Entity& DefaultTransformation();
+
+        // Sprite
+        //  Comment:
+        //      Attaches a SpriteComponent and any other required component
+        //  Components:
+        //      - TransformComponent
+        //      - SpriteComponent
+        //      - MeshComponent
+        //      - ShaderComponent
+        Entity& Sprite(Memory::Ptr<Graphics::Texture2D> pTexture, const glm::vec2& pSize = { -1.f, -1.f });
+
+        // Text
+        //  Comment:
+        //      Attaches a TextComponent and any other required component to draw Text
+        //  Components:
+        //      - SpriteComponet
+        //      - TransformComponent
+        //      - SpriteComponent
+        //      - MeshComponent
+        //      - ShaderComponent
+        Entity& Text(const std::string& pText, size_t pFontSize, Graphics::FontFaceHandle pFontFace);
 
         static bool IsValid(const Entity& pEntity);
 

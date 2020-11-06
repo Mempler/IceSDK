@@ -13,6 +13,8 @@ namespace IceSDK::Systems
         {
         }
 
+        static void Init();
+
         void Tick(float pDelta) override;
         void Draw(float pDelta) override;
     };
