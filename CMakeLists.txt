@@ -48,7 +48,8 @@ function(target_link_assets)
             COMMAND
                 ${Python_EXECUTABLE}
                 ${IceSDK_SOURCE_DIR}/tools/compile_assets.py
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ${CMAKE_CURRENT_SOURCE_DIR}
+                    --target ${CMAKE_CURRENT_SOURCE_DIR}
+                    --out ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     )
 endfunction()
 
