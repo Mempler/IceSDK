@@ -3,6 +3,15 @@
 import os
 import sys
 import platform
+import argparse
+
+parser = argparse.ArgumentParser(
+    description='Cross platform way to easily compile assets.')
+
+parser.add_argument('--target', type=str)
+parser.add_argument('--out', type=str)
+args = parser.parse_args()
+
 
 def find_platform():
     is_linux = platform.system() == "Linux"
@@ -17,13 +26,14 @@ def find_platform():
 
     return host_platform
 
+
 def Main():
     current = os.path.dirname(__file__)
     old_path = os.getcwd()
 
     platform = find_platform()
-    build_dir = sys.argv[1]  # out dir
-    target = sys.argv[2]
+    build_dir = args.out
+    target = args.target
 
     executable = os.path.realpath("%s/%s/AssetCompiler" % (current, platform))
 
