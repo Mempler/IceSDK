@@ -1,8 +1,0 @@
-enabled: true
-request_review: author
-restylers:
-  - clang-format
-exclude:
-  - "**/*.patch"
-  - "**/third-party/**/*"
-  - ".github/workflows/**/*"

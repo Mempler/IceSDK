@@ -1,7 +1,0 @@
-import("//IceSDK/IceSDK.gni")
-
-IceSDK_Benchmark("FileSystem") {
-    sources = [
-        "FileSystem.cc"
-    ]
-}

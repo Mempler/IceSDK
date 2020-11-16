@@ -1,7 +1,0 @@
-static_library("imgui") {
-    sources = [
-
-    ]
-
-    include_dirs = [ "//third-party/sdl2/include" ]
-}

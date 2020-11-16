@@ -1,9 +1,0 @@
-import("//IceSDK/IceSDK.gni")
-
-IceSDK_Test("IceSDK") {
-    sources = [
-        "Utils/FileSystem.cc",
-        "Utils/String.cc",
-        "Utils/Buffer.cc",
-    ]
-}
