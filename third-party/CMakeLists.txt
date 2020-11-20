@@ -18,7 +18,7 @@ if (ICESDK_USE_SDL2)
         endif()
     endif()
 
-    if (UNIX)
+    if (UNIX)    
         find_package(SDL2 REQUIRED)
 
         # It's not static in reality
@@ -40,6 +40,7 @@ add_subdirectory(bx)
 
 if (UNIX)
     # Find freetype
+
     find_package(Freetype REQUIRED)
     add_library(freetype INTERFACE)
     target_link_libraries(freetype INTERFACE ${FREETYPE_LIBRARIES})

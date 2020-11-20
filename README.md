@@ -13,18 +13,17 @@ Setting things up is quite easy, you simply go ahead and run following commands:
 # Clone the repository
 git clone https://github.com/IceSDK/IceSDK
 
+# Create a directory && go into it
+mkdir build && cd build
 
-# Generate IDE Specific files
-# those are the supported args:
-# --ide=(`vscode`, `vs2017`, `vs2019`) --target?=(`android`, `emscripten`)
-# though android doesn't really work right now.
-python3 ./tools/setup.py --ide=vscode
+# Generate CMake build files
+cmake .. -GNinja # we recommend ninja generator since it's much faster
 ```
 
-## Manual Setup
+### NixOS
 
-Manual setup isn't really supported, if you want to know how it works,
-please checkout .ide and or .github/workflows
+NixOS is a bit werid though. \
+just enter `nix-shell` and run the commands above
 
 ## Supported Platforms
 
@@ -40,9 +39,9 @@ iOS/MacOS aren't currently supported since i lack those devices.
 | Platform   | Windows                                                                                             | Linux                                                                                               | MacOS |
 | ---------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----- |
 | PC         | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Windows/badge.svg)       | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Linux/badge.svg)         | :x:   |
-| Android    | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/Win32%20Android/badge.svg)    | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/Linux%20Android/badge.svg)    | :x:   |
-| iOS        | :x:                                                                                                 | :x:                                                                                                 | :x:   |
-| Emscripten | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/Win32%20Emscripten/badge.svg) | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/Linux%20Emscripten/badge.svg) | :x:   |
+| Android    | :x:   | :x:    | :x:   |
+| iOS        | :x:   | :x:    | :x:   |
+| Emscripten | :x:   | :x:    | :x:   |
 
 ## License
 
