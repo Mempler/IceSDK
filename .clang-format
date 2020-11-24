@@ -160,7 +160,7 @@ IncludeCategories:
     SortPriority:    500
   
   # Standard Libraries
-  - Regex:           '<[[:alnum:].]+>'
+  - Regex:           '<[[:alnum:]_.]+>'
     Priority:        5000
     SortPriority:    5000
 
@@ -170,37 +170,13 @@ IncludeCategories:
     SortPriority:    -1
 
   # IceSDK
-  - Regex:           '^"[Assets\/].*'
+  - Regex:           '^"[IceSDK\/].*'
     Priority:        1
     SortPriority:    1
-
-  - Regex:           '^"[Audio\/].*'
-    Priority:        2
-    SortPriority:    2
-
-  - Regex:           '^"[ECS\/].*'
-    Priority:        3
-    SortPriority:    3
-
-  - Regex:           '^"[Graphics\/].*'
-    Priority:        4
-    SortPriority:    4
-
-  - Regex:           '^"[Utils\/].*'
-    Priority:        5
-    SortPriority:    5
-
-  - Regex:           '^"[Input\/].*'
-    Priority:        6
-    SortPriority:    6
-
-  - Regex:           '^"[Physics\/].*'
-    Priority:        7
-    SortPriority:    7
-
+    
   - Regex:           '^".*'
-    Priority:        8
-    SortPriority:    8
+    Priority:        100
+    SortPriority:    100
 
 
 

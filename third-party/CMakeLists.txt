@@ -1,31 +1,34 @@
 #######################################################
 #                      Audio                          #
 #######################################################
+if (ICESDK_USE_FMOD)
+    add_subdirectory(fmod)
+endif()
 
 #######################################################
 #                     Graphics                        #
 #######################################################
 
 # Windowing
-# Fix for 32 bit
-
-# SDL2
-if (MSVC)
-    if (BITS EQUAL "32")
-        set(OPT_DEF_LIBC ON)
+if (ICESDK_USE_SDL2)
+    # Fix for 32 bit
+    if (MSVC)
+        if (BITS EQUAL "32")
+            set(OPT_DEF_LIBC ON)
+        endif()
     endif()
-endif()
 
-if (UNIX)
-    find_package(SDL2 REQUIRED)
+    if (UNIX)    
+        find_package(SDL2 REQUIRED)
 
-    # It's not static in reality
-    # it's just a wrapper
-    add_library(SDL2-static INTERFACE)
-    target_link_libraries(SDL2-static INTERFACE ${SDL2_LIBRARIES})
-    target_include_directories(SDL2-static INTERFACE ${SDL2_INCLUDE_DIRS})
-else()
-    add_subdirectory(sdl2)
+        # It's not static in reality
+        # it's just a wrapper
+        add_library(SDL2-static INTERFACE)
+        target_link_libraries(SDL2-static INTERFACE ${SDL2_LIBRARIES})
+        target_include_directories(SDL2-static INTERFACE ${SDL2_INCLUDE_DIRS})
+    else()
+        add_subdirectory(sdl2)
+    endif()
 endif()
 
 # Graphics Wrapper
@@ -37,6 +40,7 @@ add_subdirectory(bx)
 
 if (UNIX)
     # Find freetype
+
     find_package(Freetype REQUIRED)
     add_library(freetype INTERFACE)
     target_link_libraries(freetype INTERFACE ${FREETYPE_LIBRARIES})
@@ -55,6 +59,7 @@ add_subdirectory(glm)
 #                      Utils                          #
 #######################################################
 add_subdirectory(entt)
+add_subdirectory(imgui)
 add_subdirectory(spdlog)
 
 #######################################################

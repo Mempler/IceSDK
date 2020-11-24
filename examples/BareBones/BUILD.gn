@@ -1,0 +1,12 @@
+import("//IceSDK/IceSDK.gni")
+
+IceSDK_Project("BareBones") {
+    assets = [
+        "Assets/Box.png",
+        "Assets/Ground.png"
+    ]
+    
+    sources = [
+        "main.cc"
+    ]
+}

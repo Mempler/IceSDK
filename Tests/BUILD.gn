@@ -1,0 +1,5 @@
+group("Tests") {
+    deps = [
+        "//Tests/IceSDK:TestIceSDK"
+    ]
+}

@@ -1,0 +1,7 @@
+import("//IceSDK/IceSDK.gni")
+
+IceSDK_Project("AssetCompiler") {
+    sources = [
+        "main.cc"
+    ]
+}

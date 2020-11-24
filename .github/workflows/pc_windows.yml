@@ -1,0 +1,34 @@
+name: PC Windows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  IceSDK:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Required Packages
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install ninja --accept-license -y
+
+      - name: Generate Build Files
+        run: |
+          mkdir .\build\
+          cd .\build\
+
+          cmake .. -DICESDK_BUILD_TESTS=ON -DICESDK_USE_FMOD=OFF -DCMAKE_BUILD_TYPE=Release -G Ninja
+        shell: pwsh
+
+      - name: Build IceSDK
+        run: ninja -C build
+        shell: pwsh
+
+      - name: Execute Tests
+        run: .\build\bin\TestIceSDK

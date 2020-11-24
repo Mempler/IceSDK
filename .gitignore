@@ -1,4 +1,8 @@
-build/
+out/
 .vscode/
-.vs/
 .idea/
+.vs/
+*.log
+build/
+cmake-build-*
+.cache/

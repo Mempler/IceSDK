@@ -1,13 +1,9 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 project(IceSDK)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-option(ICESDK_USE_SDL2 "Use SDL2" ON)
-# option(ICESDK_USE_FMOD "Use FMOD" ON)
+math(EXPR BITS "8*${CMAKE_SIZEOF_VOID_P}")
 
 # Fix for FMOD
 if (UNIX)
@@ -15,16 +11,55 @@ if (UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
+# Easier access
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+option(ICESDK_USE_SDL2     "Use SDL2"               ON)
+option(ICESDK_USE_FMOD     "Use FMOD"               ON)
+option(ICESDK_USE_PROFILER "Use IceSDK's Profiler" OFF)
+
+option(ICESDK_BUILD_TESTS "Build Test cases" OFF)
+
+# Asset Compiler Function
+function(target_link_assets)
+    set(flags OPTIONAL FLAGS)
+    set(oneValueArgs TARGET)
+    set(multiValueArgs SOURCES)
+
+    include(CMakeParseArguments)
+    cmake_parse_arguments(ASSET
+            "${flags}"
+            "${oneValueArgs}"
+            "${multiValueArgs}"
+            ${ARGN})
+
+    # message(${ASSET_TARGET})
+    # message(${ASSET_SOURCES})
+
+    # TODO: actually use ASSET_SOURCES
+    # TODO: DO NOT hardcode Assets/ in python file
+
+    find_package (Python REQUIRED)
+
+    message(${CMAKE_CURRENT_SOURCE_DIR})
+    add_custom_command(
+            TARGET ${ASSET_TARGET}
+            COMMAND
+                ${Python_EXECUTABLE}
+                ${IceSDK_SOURCE_DIR}/tools/compile_assets.py
+                    --target ${CMAKE_CURRENT_SOURCE_DIR}
+                    --out ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+    )
+endfunction()
+
+
 add_subdirectory(third-party)
-
-set_target_properties(astc_inspector_cli PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
-
 add_subdirectory(IceSDK)
+add_subdirectory(examples)
 
-#if (ICESDK_USE_FMOD)
-#    target_link_libraries(IceSDK PUBLIC fmod)
-#    target_compile_definitions(IceSDK PUBLIC -DICESDK_FMOD=1)
-#endif()
+if (ICESDK_BUILD_TESTS)
+    add_subdirectory(Tests)
+endif()
 
-#add_executable(Game IceSDK/main.cc)
-#target_link_libraries(Game PUBLIC IceSDK)
+add_subdirectory(tools/sources/AssetCompiler)
