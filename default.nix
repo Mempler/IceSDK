@@ -4,5 +4,4 @@ with import <unstable> {};
 stdenv.mkDerivation {
   name = "env";
   nativeBuildInputs = [ clang_11 clang-tools cmake ];
-  buildInputs = [ freetype SDL2 ];
-}
+  

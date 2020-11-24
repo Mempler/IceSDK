@@ -38,7 +38,7 @@ iOS/MacOS aren't currently supported since i lack those devices.
 
 | Platform   | Windows                                                                                      | Linux                                                                                      | MacOS |
 | ---------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ----- |
-| PC         | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Windows/badge.svg) | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Linux/badge.svg) | :x:   |
+| PC         | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Windows/badge.svg)   | ![GitHub Workflow Status](https://github.com/IceSDK/IceSDK/workflows/PC%20Linux/badge.svg)   | :x:   |
 | Android    | :x:                                                                                          | :x:                                                                                        | :x:   |
 | iOS        | :x:                                                                                          | :x:                                                                                        | :x:   |
 | Emscripten | :x:                                                                                          | :x:                                                                                        | :x:   |
